@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">
+
+    <changeSet id="20221014-00" author="gilyova">
+        <preConditions>
+            <not>
+                <tableExists tableName="USERS" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы USERS</comment>
+        <createTable tableName="USERS">
+            <column name="ID" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="LOGIN" type="varchar(25)"/>
+            <column name="HASH" type="varchar(70)"/>
+            <column name="CREATE_DATE" type="timestamp(0)" defaultValueDate="current_timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="USERS"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="20221014-01" author="gilyova">
+        <preConditions>
+            <not>
+                <tableExists tableName="URL" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы URL</comment>
+        <createTable tableName="URL">
+            <column name="ID" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="LONG_URL" type="varchar(1000)"/>
+            <column name="SHORT_URL" type="varchar(25)"/>
+            <column name="ID_USER" type="int"/>
+            <column name="CREATE_DATE" type="timestamp(0)" defaultValueDate="current_timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DELETE_DATE" type="timestamp(0)"/>
+            <column name="COUNT_OF_VIEWS" type="int"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="URL"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="20221014-02" author="gilyova">
+        <preConditions>
+            <not>
+                <tableExists tableName="TRANSITION" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы TRANSITION</comment>
+        <createTable tableName="TRANSITION">
+            <column name="ID" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ID_URL" type="int"/>
+            <column name="CREATE_DATE" type="timestamp(0)" defaultValueDate="current_timestamp"/>
+            <column name="REFERER" type="varchar(1000)"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="TRANSITION"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
