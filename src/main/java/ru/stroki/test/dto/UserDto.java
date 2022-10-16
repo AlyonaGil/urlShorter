@@ -1,9 +1,6 @@
 package ru.stroki.test.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.stroki.test.entity.User;
 
 import java.time.LocalDateTime;
@@ -12,14 +9,9 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UserDto {
     private Integer id;
     private String login;
     private LocalDateTime registrationDate;
-
-    public UserDto(User user){
-        this.setId(user.getId());
-        this.setRegistrationDate(user.getCreateDate());
-        this.setLogin(user.getLogin());
-    }
 }
