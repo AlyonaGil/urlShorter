@@ -1,5 +1,6 @@
 package ru.stroki.test.repository;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -11,12 +12,8 @@ import java.util.List;
 @Repository
 public interface TransitionRepository extends JpaRepository<Transition, Integer> {
 
-    @Query("SELECT referer\n" +
-            "FROM transition\n" +
-            "group by referer\n" +
-            "ORDER BY count(referer) DESC " +
-            "LIMIT 20")
-    List<String> getReferersTop();
+    @Query("SELECT referer FROM Transition group by referer ORDER BY count(referer) DESC")
+    List<String> getReferersTop(Pageable pageable);
 
     List<Transition> getTransitionByUrl(Url url);
 }
