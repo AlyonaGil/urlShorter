@@ -36,4 +36,9 @@ public class Url {
     private LocalDateTime deleteDate;
     @OneToMany(mappedBy = "url")
     private List<Transition> transitions;
+
+    @PrePersist
+    void onCreate() {
+        this.setCreateDate(LocalDateTime.now().withNano(0));
+    }
 }

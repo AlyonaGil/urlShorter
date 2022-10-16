@@ -29,4 +29,9 @@ public class Transition {
     @NotBlank
     @Column(name = "REFERER")
     private String referer;
+
+    @PrePersist
+    void onCreate() {
+        this.setCreateDate(LocalDateTime.now().withNano(0));
+    }
 }

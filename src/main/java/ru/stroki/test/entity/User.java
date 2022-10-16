@@ -35,4 +35,9 @@ public class User {
     private LocalDateTime createDate;
     @OneToMany(mappedBy = "user")
     private List<Url> urls;
+
+    @PrePersist
+    void onCreate() {
+        this.setCreateDate(LocalDateTime.now().withNano(0));
+    }
 }
