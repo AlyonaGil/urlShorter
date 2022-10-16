@@ -16,7 +16,9 @@
             <column name="ID" type="serial" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="LOGIN" type="varchar(25)"/>
+            <column name="LOGIN" type="varchar(25)">
+                <constraints unique="true"/>
+            </column>
             <column name="HASH" type="varchar(70)"/>
             <column name="CREATE_DATE" type="timestamp(0)" defaultValueDate="current_timestamp">
                 <constraints nullable="false"/>
@@ -44,7 +46,6 @@
                 <constraints nullable="false"/>
             </column>
             <column name="DELETE_DATE" type="timestamp(0)"/>
-            <column name="COUNT_OF_VIEWS" type="int"/>
         </createTable>
         <rollback>
             <dropTable tableName="URL"/>
