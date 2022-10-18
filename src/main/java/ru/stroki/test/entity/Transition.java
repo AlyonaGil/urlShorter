@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Builder
 public class Transition {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
