@@ -2,14 +2,12 @@ package ru.stroki.test.dto;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TransitionDto {
+public class StatisticsDto {
     private String shortUrl;
     private Integer countTransition;
 }
