@@ -13,7 +13,7 @@
             </and>
         </preConditions>
         <addForeignKeyConstraint
-                baseColumnNames="ID_USER"
+                baseColumnNames="USER_ID"
                 baseTableName="URL"
                 constraintName="FK_URL_USERS"
                 referencedColumnNames="ID"
@@ -27,24 +27,10 @@
             </and>
         </preConditions>
         <addForeignKeyConstraint
-                baseColumnNames="ID_URL"
+                baseColumnNames="URL_ID"
                 baseTableName="TRANSITION"
                 constraintName="FK_TRANSITION_URL"
                 referencedColumnNames="ID"
                 referencedTableName="URL"/>
-    </changeSet>
-    <changeSet id="20221014-12" author="gilyova">
-        <preConditions onFail="MARK_RAN">
-            <and>
-                <tableExists tableName="REFERER"/>
-                <tableExists tableName="TRANSITION"/>
-            </and>
-        </preConditions>
-        <addForeignKeyConstraint
-                baseColumnNames="ID_REFERER"
-                baseTableName="TRANSITION"
-                constraintName="FK_TRANSITION_REFERER"
-                referencedColumnNames="ID"
-                referencedTableName="REFERER"/>
     </changeSet>
 </databaseChangeLog>
