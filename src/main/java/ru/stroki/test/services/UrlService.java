@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface UrlService {
     UrlDto addUrl(String longUrl, User user);
-    List<UrlDto> getAllUrlsByUserId(Integer UserId);
-    UrlInfoDto getById(Integer id);
-    void deleteUrl(Integer id);
+    List<UrlDto> getAllUrls(User user);
+    UrlInfoDto getById(Integer id, User user);
+    void deleteUrl(Integer id, User user);
 
 }
