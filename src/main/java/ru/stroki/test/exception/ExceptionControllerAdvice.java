@@ -32,4 +32,10 @@ public class ExceptionControllerAdvice {
     public ResponseEntity<ExceptionDto> validationException(ValidationException ex) {
         return ResponseEntity.status(418).body(dtoMapper.getExceptionDto(418, ex.getReason()));
     }
+
+    @ExceptionHandler({Exception.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<ExceptionDto> otherException(Exception ex) {
+        return ResponseEntity.status(500).body(dtoMapper.getExceptionDto(500, ex.getMessage()));
+    }
 }

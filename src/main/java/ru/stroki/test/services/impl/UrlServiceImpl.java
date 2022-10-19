@@ -10,6 +10,7 @@ import ru.stroki.test.repository.UrlRepository;
 import ru.stroki.test.services.UrlService;
 import ru.stroki.test.mapper.DtoMapper;
 import ru.stroki.test.utils.UrlConverter;
+import ru.stroki.test.validation.ValidationException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,12 +24,9 @@ public class UrlServiceImpl implements UrlService {
 
     private final DtoMapper dtoMapper;
 
-
     @Override
     public UrlDto addUrl(String longUrl, User user) {
-        //todo проверка на валидность longUrl
         Integer fromSeq = urlRepository.getIntFromSeq();
-        //todo проверка что пришло число
         String shortUrl = UrlConverter.getShortUrl(fromSeq);
         Url url = Url.builder()
                 .longUrl(longUrl)
@@ -49,19 +47,17 @@ public class UrlServiceImpl implements UrlService {
 
     @Override
     public UrlInfoDto getById(Integer id, User user) {
-        //todo вренуть ошибку вместо null
         return urlRepository.findByIdAndUser(id, user)
                 .map(dtoMapper::getUrlInfoDto)
-                .orElse(null);
+                .orElseThrow(() -> new ValidationException("Url с  заданным id не существует"));
     }
 
     @Override
     public void deleteUrl(Integer id, User user) {
-        //todo вренуть ошибку вместо null
         urlRepository.findByIdAndUser(id, user)
                 .map(u -> {
                     u.setDeleteDate(LocalDateTime.now());
                     return urlRepository.save(u);
-                }).orElse(null);
+                }).orElseThrow(() -> new ValidationException("Url с  заданным id не существует"));
     }
 }

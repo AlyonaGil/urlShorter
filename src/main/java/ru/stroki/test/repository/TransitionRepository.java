@@ -1,6 +1,5 @@
 package ru.stroki.test.repository;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,12 +23,4 @@ public interface TransitionRepository extends JpaRepository<Transition, Integer>
     List<String> getReferersTop(@Param("userID") Integer userId);
 
     List<Transition> getTransitionByUrlAndCreateDateBetween(Url url, LocalDateTime startDate, LocalDateTime endDate);
-
-//    @Query(value = "SELECT * FROM transition\n" +
-//            "WHERE url_id IN (SELECT id\n" +
-//            "                 FROM url\n" +
-//            "                 WHERE user_id = :userID\n" +
-//            "                 AND delete_date IS NULL)\n" +
-//            "AND create_date BETWEEN :startDate AND :endDate", nativeQuery = true)
-//    List<Transition> getStatisticsViews(@Param("userID") Integer userId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 }
