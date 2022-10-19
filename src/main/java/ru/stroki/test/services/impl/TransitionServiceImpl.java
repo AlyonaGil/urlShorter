@@ -35,7 +35,7 @@ public class TransitionServiceImpl implements TransitionService {
         return urls.stream()
                 .map(url -> {
                     int count = transitionRepository.getTransitionByUrlAndCreateDateBetween(url, startDate, endDate).size();
-                    return dtoMapper.getDto(url.getShortUrl(), count);
+                    return dtoMapper.getStatisticsDto(url.getShortUrl(), count);
                 })
                 .collect(Collectors.toList());
     }

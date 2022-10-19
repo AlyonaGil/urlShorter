@@ -8,6 +8,7 @@ import ru.stroki.test.repository.UserRepository;
 import ru.stroki.test.services.UserService;
 import ru.stroki.test.utils.AuthUtil;
 import ru.stroki.test.mapper.DtoMapper;
+import ru.stroki.test.validation.ValidationException;
 
 import java.util.Optional;
 
@@ -21,14 +22,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createUser(String login, String password){
-        //todo проверка корректности строк login и password
-        //todo + обработка ошибок
+        if (repository.getByLogin(login).isPresent()){
+            throw new ValidationException("Пользователь с логином " + login + " уже существует");
+        }
         User user = User.builder()
                 .login(login)
                 .hash(AuthUtil.getHash(login, password))
                 .build();
+
         User userSaved = repository.saveAndFlush(user);
-        return dtoMapper.getDto(userSaved);
+        return dtoMapper.getUserDto(userSaved);
     }
 
     @Override
@@ -37,7 +40,7 @@ public class UserServiceImpl implements UserService {
         //todo проверка корректности Login
         //todo если пусто, то вернуть ошибку
         return repository.getByLogin(login)
-                .map(dtoMapper::getDto)
+                .map(dtoMapper::getUserDto)
                 .orElse(null);
     }
 

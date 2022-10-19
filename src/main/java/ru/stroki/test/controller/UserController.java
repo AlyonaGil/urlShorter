@@ -23,17 +23,18 @@ public class UserController {
 
     @GetMapping("/user")
     public ResponseEntity<UserDto> getUser(@RequestAttribute("user") User user) {
-        return ResponseEntity.ok(dtoMapper.getDto(user));
+        return ResponseEntity.ok(dtoMapper.getUserDto(user));
     }
 
     @PostMapping("/user")
-    public ResponseEntity<UserDto> createUser(@RequestBody Map<String, String> params){
+    public ResponseEntity<?> createUser(@RequestBody Map<String, String> params){
+        UserDto userDto = userService.createUser(params.get("login"), params.get("password"));
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{login}")
                 .buildAndExpand(params.get("login"))
                 .toUri();
         return ResponseEntity.created(location)
-                .body(userService.createUser(params.get("login"), params.get("password")));
+                .body(userDto);
     }
 }

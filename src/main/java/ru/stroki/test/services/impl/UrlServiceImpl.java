@@ -36,14 +36,14 @@ public class UrlServiceImpl implements UrlService {
                 .user(user)
                 .build();
         Url urlSaved = urlRepository.saveAndFlush(url);
-        return dtoMapper.getDto(urlSaved);
+        return dtoMapper.getUrlDto(urlSaved);
     }
 
     @Override
     public List<UrlDto> getAllUrls(User user) {
         return urlRepository.getUrlsByUser(user)
                 .stream()
-                .map(dtoMapper::getDto)
+                .map(dtoMapper::getUrlDto)
                 .collect(Collectors.toList());
     }
 
@@ -51,7 +51,7 @@ public class UrlServiceImpl implements UrlService {
     public UrlInfoDto getById(Integer id, User user) {
         //todo вренуть ошибку вместо null
         return urlRepository.findByIdAndUser(id, user)
-                .map(dtoMapper::getInfoDto)
+                .map(dtoMapper::getUrlInfoDto)
                 .orElse(null);
     }
 
