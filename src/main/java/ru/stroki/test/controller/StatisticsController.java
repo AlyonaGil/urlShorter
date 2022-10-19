@@ -1,31 +1,29 @@
 package ru.stroki.test.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.stroki.test.dto.StatisticsDto;
-import ru.stroki.test.services.impl.StatisticsServiceImpl;
+import ru.stroki.test.entity.User;
+import ru.stroki.test.services.impl.TransitionServiceImpl;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/urlShorter/statistics")
 public class StatisticsController {
-    @Autowired
-    private StatisticsServiceImpl transitionService;
+    private final TransitionServiceImpl transitionService;
 
     @GetMapping("/countOfViews")
-    public ResponseEntity<List<StatisticsDto>> getCountViewsUrls(@RequestBody Map<String, LocalDateTime> params){
-        return ResponseEntity.ok(transitionService.getCountViewsUrls(params.get("startDate"), params.get("endDate")));
+    public ResponseEntity<List<StatisticsDto>> getCountViewsUrls(@RequestAttribute("user") User user, @RequestBody Map<String, LocalDateTime> params){
+        return ResponseEntity.ok(transitionService.getCountViewsUrls(user, params.get("startDate"), params.get("endDate")));
     }
 
     @GetMapping("/top")
-    public ResponseEntity<List<String>> getReferersTop(){
-        return ResponseEntity.ok(transitionService.getReferersTop());
+    public ResponseEntity<List<String>> getReferersTop(@RequestAttribute("user") User user){
+        return ResponseEntity.ok(transitionService.getReferersTop(user));
     }
 }
