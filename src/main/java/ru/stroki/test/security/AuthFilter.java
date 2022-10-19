@@ -1,7 +1,6 @@
 package ru.stroki.test.security;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.AllArgsConstructor;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,14 +18,10 @@ import java.io.IOException;
 import java.util.Optional;
 
 @Component
+@AllArgsConstructor
 @Order(1)
 public class AuthFilter extends OncePerRequestFilter {
-    private static final Logger logger = LoggerFactory.getLogger(AuthUtil.class);
     private final UserServiceImpl userService;
-
-    public AuthFilter(UserServiceImpl userService) {
-        this.userService = userService;
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -37,7 +32,6 @@ public class AuthFilter extends OncePerRequestFilter {
         }
         if (user.isPresent()) {
             request.setAttribute("user", user.get());
-            logger.info("Success");
             filterChain.doFilter(request, response);
         } else {
             response.sendError(HttpStatus.UNAUTHORIZED.value(), "Not Authorized");
@@ -48,6 +42,6 @@ public class AuthFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
         String method = request.getMethod();
-        return "/urlShorter/user".equals(path) && "POST".equals(method) || "/urlShorter/redirect".equals(path);
+        return "/urlShorter/user".equals(path) && "POST".equals(method) || path.startsWith("/urlShorter/redirect");
     }
 }
