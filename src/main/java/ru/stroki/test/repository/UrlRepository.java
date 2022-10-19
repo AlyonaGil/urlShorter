@@ -11,11 +11,11 @@ import java.util.Optional;
 
 @Repository
 public interface UrlRepository extends JpaRepository<Url, Integer> {
-    List<Url> getUrlsByDeleteDateIsNull();
+    List<Url> getUrlsByDeleteDateIsNullAndUser(User user);
 
     Optional<Url> findByIdAndUser(Integer id, User user);
 
-    Optional<Url> findByShortUrlAndUser(String shortUrl, User user);
+    Optional<Url> findByShortUrl(String shortUrl);
 
     List<Url> getUrlsByUser(User user);
 
