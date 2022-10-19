@@ -1,6 +1,6 @@
 package ru.stroki.test.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.stroki.test.dto.UrlDto;
@@ -12,11 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/urlShorter")
 public class UrlController {
-    @Autowired
-    private UrlServiceImpl urlService;
-
+    private final UrlServiceImpl urlService;
 
     @PostMapping("/url")
     public ResponseEntity<UrlDto> addUrl(@RequestAttribute("user") User user, @RequestBody Map<String, String> params){

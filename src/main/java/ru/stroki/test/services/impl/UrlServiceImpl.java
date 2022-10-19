@@ -1,15 +1,14 @@
 package ru.stroki.test.services.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.stroki.test.dto.UrlDto;
 import ru.stroki.test.dto.UrlInfoDto;
 import ru.stroki.test.entity.Url;
 import ru.stroki.test.entity.User;
 import ru.stroki.test.repository.UrlRepository;
 import ru.stroki.test.services.UrlService;
-import ru.stroki.test.utils.DtoMapper;
+import ru.stroki.test.mapper.DtoMapper;
 import ru.stroki.test.utils.UrlConverter;
 
 import java.time.LocalDateTime;
@@ -17,11 +16,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class UrlServiceImpl implements UrlService {
-    @Autowired
-    private UrlRepository urlRepository;
-    @Autowired
-    private DtoMapper dtoMapper;
+
+    private final UrlRepository urlRepository;
+
+    private final DtoMapper dtoMapper;
 
 
     @Override

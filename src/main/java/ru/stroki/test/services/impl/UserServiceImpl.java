@@ -1,23 +1,23 @@
 package ru.stroki.test.services.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.stroki.test.dto.UserDto;
 import ru.stroki.test.entity.User;
 import ru.stroki.test.repository.UserRepository;
 import ru.stroki.test.services.UserService;
 import ru.stroki.test.utils.AuthUtil;
-import ru.stroki.test.utils.DtoMapper;
+import ru.stroki.test.mapper.DtoMapper;
 
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserRepository repository;
 
-    @Autowired
-    private DtoMapper dtoMapper;
+    private final UserRepository repository;
+
+    private final DtoMapper dtoMapper;
 
     @Override
     public UserDto createUser(String login, String password){

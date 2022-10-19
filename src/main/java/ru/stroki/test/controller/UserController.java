@@ -1,30 +1,24 @@
 package ru.stroki.test.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.stroki.test.dto.UserDto;
 import ru.stroki.test.entity.User;
 import ru.stroki.test.services.UserService;
-import ru.stroki.test.utils.DtoMapper;
+import ru.stroki.test.mapper.DtoMapper;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.net.URI;
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/urlShorter")
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private DtoMapper dtoMapper;
+    private final DtoMapper dtoMapper;
 
 
     @GetMapping("/user")
