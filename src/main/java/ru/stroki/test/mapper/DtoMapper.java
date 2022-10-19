@@ -1,7 +1,8 @@
-package ru.stroki.test.utils;
+package ru.stroki.test.mapper;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ru.stroki.test.dto.StatisticsDto;
 import ru.stroki.test.dto.UrlDto;
 import ru.stroki.test.dto.UrlInfoDto;
 import ru.stroki.test.dto.UserDto;
@@ -11,6 +12,13 @@ import ru.stroki.test.entity.User;
 public final class DtoMapper {
     @Value("${domain}")
     private String appDomain;
+
+    public StatisticsDto getDto(String shortUrl, Integer count){
+        return StatisticsDto.builder()
+                .shortUrl(appDomain + shortUrl)
+                .countTransition(count)
+                .build();
+    }
 
     public UserDto getDto(User user) {
         return UserDto.builder()
