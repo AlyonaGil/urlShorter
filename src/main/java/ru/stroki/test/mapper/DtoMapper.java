@@ -28,7 +28,7 @@ public final class DtoMapper {
         return UserDto.builder()
                 .id(user.getId())
                 .login(user.getLogin())
-                .registrationDate(user.getCreateDate())
+                .registrationDate(String.valueOf(user.getCreateDate()))
                 .build();
     }
 
@@ -38,7 +38,7 @@ public final class DtoMapper {
                 .id(url.getId())
                 .longUrl(url.getLongUrl())
                 .shortUrl(appDomain + url.getShortUrl())
-                .createDate(url.getCreateDate())
+                .createDate(String.valueOf(url.getCreateDate()))
                 .build();
     }
 
@@ -47,9 +47,9 @@ public final class DtoMapper {
                 .longUrl(url.getLongUrl())
                 .shortUrl(appDomain + url.getShortUrl())
                 .user(getUserDto(url.getUser()))
-                .createDate(url.getCreateDate())
+                .createDate(String.valueOf(url.getCreateDate()))
                 .countOfViews(url.getTransitions().size())
-                .deleteDate(url.getDeleteDate())
+                .deleteDate(String.valueOf(url.getDeleteDate()))
                 .build();
     }
 }

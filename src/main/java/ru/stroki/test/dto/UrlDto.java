@@ -15,5 +15,5 @@ public class UrlDto {
     private Integer id;
     private String longUrl;
     private String shortUrl;
-    private LocalDateTime createDate;
+    private String createDate;
 }

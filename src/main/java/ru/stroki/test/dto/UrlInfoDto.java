@@ -14,7 +14,7 @@ public class UrlInfoDto {
     private String longUrl;
     private String shortUrl;
     private UserDto user;
-    private LocalDateTime createDate;
-    private LocalDateTime deleteDate;
+    private String createDate;
+    private String deleteDate;
     private Integer countOfViews;
 }

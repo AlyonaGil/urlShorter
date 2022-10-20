@@ -13,5 +13,5 @@ import java.time.LocalDateTime;
 public class UserDto {
     private Integer id;
     private String login;
-    private LocalDateTime registrationDate;
+    private String registrationDate;
 }
