@@ -24,11 +24,12 @@ public class User {
     private Integer id;
     @NotNull
     @NotBlank
-    @Size(max = 25)
+    @Size(max = 25, min = 5)
     @Column(name = "LOGIN")
     private String login;
     @NotNull
     @NotBlank
+    @Size(max = 70)
     @Column(name = "HASH")
     private String hash;
     @Column(name = "CREATE_DATE", updatable = false)

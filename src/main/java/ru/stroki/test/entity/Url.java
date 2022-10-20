@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,8 +25,10 @@ public class Url {
     @NotNull
     @NotBlank
     @Column(name = "LONG_URL")
+    @Size(max = 1000)
     private String longUrl;
     @Column(name = "SHORT_URL")
+    @Size(max = 45)
     private String shortUrl;
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)

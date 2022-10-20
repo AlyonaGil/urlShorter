@@ -26,6 +26,9 @@ public class UrlServiceImpl implements UrlService {
 
     @Override
     public UrlDto addUrl(String longUrl, User user) {
+        if (longUrl.length() > 1000){
+            throw new ValidationException("Длина url не должна превышать 1000 символов");
+        }
         Integer fromSeq = urlRepository.getIntFromSeq();
         String shortUrl = UrlConverter.getShortUrl(fromSeq);
         Url url = Url.builder()

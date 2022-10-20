@@ -25,6 +25,12 @@ public class UserServiceImpl implements UserService {
         if (repository.getByLogin(login).isPresent()){
             throw new ValidationException("Пользователь с логином " + login + " уже существует");
         }
+        if (password.length() > 25 || password.length() < 5){
+            throw new ValidationException("Длина пароля должна быть от 5 до 25 символов");
+        }
+        if (login.length() > 25 || login.length() < 5){
+            throw new ValidationException("Длина логина должна быть от 5 до 25 символов");
+        }
         User user = User.builder()
                 .login(login)
                 .hash(AuthUtil.getHash(login, password))

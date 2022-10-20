@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
@@ -28,6 +29,7 @@ public class Transition {
     @NotNull
     @NotBlank
     @Column(name = "REFERER")
+    @Size(max = 1000)
     private String referer;
 
     @PrePersist
