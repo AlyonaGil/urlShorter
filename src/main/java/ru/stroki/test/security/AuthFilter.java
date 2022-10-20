@@ -56,6 +56,9 @@ public class AuthFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
         String method = request.getMethod();
-        return "/urlShorter/user".equals(path) && "POST".equals(method) || path.startsWith("/urlShorter/redirect");
+        return "/urlShorter/user".equals(path) && "POST".equals(method)
+                || path.startsWith("/urlShorter/redirect")
+                || path.contains("/v3/api-docs")
+                || path.contains("/swagger-ui");
     }
 }
