@@ -1,6 +1,7 @@
 package ru.stroki.test.services.impl;
 
 import lombok.AllArgsConstructor;
+import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.stereotype.Service;
 import ru.stroki.test.dto.UrlDto;
 import ru.stroki.test.dto.UrlInfoDto;
@@ -28,6 +29,11 @@ public class UrlServiceImpl implements UrlService {
     public UrlDto addUrl(String longUrl, User user) {
         if (longUrl.length() > 1000){
             throw new ValidationException("Длина url не должна превышать 1000 символов");
+        }
+        //проверка URL
+        UrlValidator urlValidator = new UrlValidator();
+        if (!urlValidator.isValid(longUrl)) {
+            throw new ValidationException("Url не валидный");
         }
         Integer fromSeq = urlRepository.getIntFromSeq();
         String shortUrl = UrlConverter.getShortUrl(fromSeq);
