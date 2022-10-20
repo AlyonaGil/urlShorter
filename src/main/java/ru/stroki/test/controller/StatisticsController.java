@@ -1,5 +1,8 @@
 package ru.stroki.test.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +17,21 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/urlShorter/statistics")
+@Tag(
+        name = "Статистика",
+        description = "Методы для ведения статистики"
+)
 public class StatisticsController {
     private final TransitionServiceImpl transitionService;
 
     @GetMapping("/countOfViews")
-    public ResponseEntity<List<StatisticsDto>> getCountViewsUrls(@RequestAttribute("user") User user, @RequestBody Map<String, String> params){
+    @Operation(summary = "Получение информации о количестве переходов для ссылок текущего пользователя в заданном временном диапазоне")
+    public ResponseEntity<List<StatisticsDto>> getCountViewsUrls(@RequestAttribute("user") User user, @RequestBody @Parameter(description = "\"startDate\" (с какого времени) \"endDate\" (по какое время)")Map<String, String> params){
         return ResponseEntity.ok(transitionService.getCountViewsUrls(user, params.get("startDate"), params.get("endDate")));
     }
 
     @GetMapping("/top")
+    @Operation(summary = "Получение топа из 20 сайтов источников переходов")
     public ResponseEntity<List<String>> getReferersTop(@RequestAttribute("user") User user){
         return ResponseEntity.ok(transitionService.getReferersTop(user));
     }

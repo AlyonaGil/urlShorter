@@ -1,5 +1,8 @@
 package ru.stroki.test.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,26 +17,34 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/urlShorter")
+@Tag(
+        name = "Ссылки",
+        description = "Методы для работы с ссылками"
+)
 public class UrlController {
     private final UrlServiceImpl urlService;
 
     @PostMapping("/url")
-    public ResponseEntity<UrlDto> addUrl(@RequestAttribute("user") User user, @RequestBody Map<String, String> params){
+    @Operation(summary = "Создание новой короткой ссылки")
+    public ResponseEntity<UrlDto> addUrl(@RequestAttribute("user") User user, @RequestBody @Parameter(description = "\"longUrl\" (url исходной ссылки)") Map<String, String> params){
         return ResponseEntity.ok(urlService.addUrl(params.get("longUrl"), user));
     }
 
     @GetMapping("/urls")
+    @Operation(summary = "Получение краткой информации о всех ссылках текущего пользователя")
     public ResponseEntity<List<UrlDto>> getAllUrls(@RequestAttribute("user") User user){
         return ResponseEntity.ok(urlService.getAllUrls(user));
     }
 
     @GetMapping("/url/{id}")
-    public ResponseEntity<UrlInfoDto> getInfoUrl(@RequestAttribute("user") User user, @PathVariable Integer id){
+    @Operation(summary = "Получение полной информации о ссылке")
+    public ResponseEntity<UrlInfoDto> getInfoUrl(@RequestAttribute("user") User user, @PathVariable @Parameter(description = "Идентификатор ссылки") Integer id){
         return ResponseEntity.ok(urlService.getById(id, user));
     }
 
     @DeleteMapping("/url/{id}")
-    public ResponseEntity<?> deleteUrl(@RequestAttribute("user") User user, @PathVariable Integer id){
+    @Operation(summary = "Удаление ссылки")
+    public ResponseEntity<?> deleteUrl(@RequestAttribute("user") User user, @PathVariable @Parameter(description = "Идентификатор ссылки") Integer id){
         urlService.deleteUrl(id, user);
         return ResponseEntity.noContent().build();
     }

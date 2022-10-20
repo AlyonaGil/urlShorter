@@ -1,5 +1,8 @@
 package ru.stroki.test.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,10 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/urlShorter")
+@Tag(
+        name = "Пользователи",
+        description = "Методы для работы с пользователями системы"
+)
 public class UserController {
     private final UserService userService;
 
@@ -22,12 +29,14 @@ public class UserController {
 
 
     @GetMapping("/user")
+    @Operation(summary = "Получить информацию о текущем пользователе")
     public ResponseEntity<UserDto> getUser(@RequestAttribute("user") User user) {
         return ResponseEntity.ok(dtoMapper.getUserDto(user));
     }
 
     @PostMapping("/user")
-    public ResponseEntity<?> createUser(@RequestBody Map<String, String> params){
+    @Operation(summary = "Регистрация нового пользователя")
+    public ResponseEntity<?> createUser(@RequestBody @Parameter(description = "\"login\" (логин), \"password\" (пароль) ") Map<String, String> params){
         UserDto userDto = userService.createUser(params.get("login"), params.get("password"));
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
