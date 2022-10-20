@@ -19,7 +19,7 @@ public final class DtoMapper {
 
     public StatisticsDto getStatisticsDto(String shortUrl, Integer count){
         return StatisticsDto.builder()
-                .shortUrl(appDomain + shortUrl)
+                .shortUrl(appDomain + "urlShorter/redirect/" + shortUrl)
                 .countTransition(count)
                 .build();
     }
@@ -37,7 +37,7 @@ public final class DtoMapper {
         return UrlDto.builder()
                 .id(url.getId())
                 .longUrl(url.getLongUrl())
-                .shortUrl(appDomain + url.getShortUrl())
+                .shortUrl(appDomain + "urlShorter/redirect/" + url.getShortUrl())
                 .createDate(String.valueOf(url.getCreateDate()))
                 .build();
     }
@@ -45,7 +45,7 @@ public final class DtoMapper {
     public UrlInfoDto getUrlInfoDto(Url url) {
         return UrlInfoDto.builder()
                 .longUrl(url.getLongUrl())
-                .shortUrl(appDomain + url.getShortUrl())
+                .shortUrl(appDomain + "urlShorter/redirect/" + url.getShortUrl())
                 .user(getUserDto(url.getUser()))
                 .createDate(String.valueOf(url.getCreateDate()))
                 .countOfViews(url.getTransitions().size())
