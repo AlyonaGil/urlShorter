@@ -10,8 +10,10 @@ import ru.stroki.test.repository.TransitionRepository;
 import ru.stroki.test.repository.UrlRepository;
 import ru.stroki.test.services.TransitionService;
 import ru.stroki.test.mapper.DtoMapper;
+import ru.stroki.test.validation.ValidationException;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,15 +28,21 @@ public class TransitionServiceImpl implements TransitionService {
     private final DtoMapper dtoMapper;
 
     @Override
-    public List<StatisticsDto> getCountViewsUrls(User user, LocalDateTime startDate, LocalDateTime endDate) {
-        //todo проверка на корректность передаваемых дат
-        //не понятно, что вернет следующий метод при отсутствии
-        //данных, если null, то требуется вернуть пустой список
+    public List<StatisticsDto> getCountViewsUrls(User user, String startDate, String endDate) {
+        LocalDateTime start;
+        LocalDateTime end;
+        try {
+            start = LocalDateTime.parse(startDate);
+            end = LocalDateTime.parse(endDate);
+
+        }catch (DateTimeParseException e){
+            throw new ValidationException("Неправильный формат даты (yyyy-MM-dd'T'HH:mm:ss)");
+        }
 
         List<Url> urls = urlRepository.getUrlsByDeleteDateIsNullAndUser(user);
         return urls.stream()
                 .map(url -> {
-                    int count = transitionRepository.getTransitionByUrlAndCreateDateBetween(url, startDate, endDate).size();
+                    int count = transitionRepository.getTransitionByUrlAndCreateDateBetween(url, start, end).size();
                     return dtoMapper.getStatisticsDto(url.getShortUrl(), count);
                 })
                 .collect(Collectors.toList());
@@ -47,7 +55,7 @@ public class TransitionServiceImpl implements TransitionService {
     }
 
     @Override
-    public String getRedirect(String shortUrl, String referer){
+    public String getRedirect(String shortUrl, String referer) {
         return urlRepository.findByShortUrl(shortUrl)
                 .map(url -> {
                     Transition transition = Transition.builder()

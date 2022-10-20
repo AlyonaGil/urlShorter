@@ -18,7 +18,7 @@ public class StatisticsController {
     private final TransitionServiceImpl transitionService;
 
     @GetMapping("/countOfViews")
-    public ResponseEntity<List<StatisticsDto>> getCountViewsUrls(@RequestAttribute("user") User user, @RequestBody Map<String, LocalDateTime> params){
+    public ResponseEntity<List<StatisticsDto>> getCountViewsUrls(@RequestAttribute("user") User user, @RequestBody Map<String, String> params){
         return ResponseEntity.ok(transitionService.getCountViewsUrls(user, params.get("startDate"), params.get("endDate")));
     }
 

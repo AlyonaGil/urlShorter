@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import ru.stroki.test.dto.ExceptionDto;
 import ru.stroki.test.mapper.DtoMapper;
 import ru.stroki.test.validation.ValidationException;
@@ -15,6 +17,7 @@ import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
 @NoArgsConstructor
+@EnableWebMvc
 public class ExceptionControllerAdvice {
 
     @Autowired
@@ -31,6 +34,12 @@ public class ExceptionControllerAdvice {
     @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
     public ResponseEntity<ExceptionDto> validationException(ValidationException ex) {
         return ResponseEntity.status(418).body(dtoMapper.getExceptionDto(418, ex.getReason()));
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ExceptionDto> handleNotFound(NoHandlerFoundException ex) {
+        return ResponseEntity.status(404).body(dtoMapper.getExceptionDto(404, ex.getMessage()));
     }
 
     @ExceptionHandler({Exception.class})
