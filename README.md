@@ -6,14 +6,16 @@
 * Apache Maven 3.6.3;
 * PostgreSQL.
 
+Cоздать БД: **urlShorter**.
+
 В файле **application.properties** (resources) задать переменные окружения:
 * Строка подключения к базе данных (`spring.datasource.url`);
 * Имя пользователя Postgres (`spring.datasource.username`);
 * Пароль пользователя Postgres (`spring.datasource.password`);
-* Используемый домен (`domain`).
+* Используемый домен (`domain`, по умолч. http://localhost:8080/).
 
 ## Запуск
-`mvnw clean install spring-boot:run`
+Запустить командой в корневой директории проекта `mvnw clean install spring-boot:run` или `mvnw spring-boot:run`
 
 ## Схема БД
 Для управления базой данных использовалась библиотека Liquibase
@@ -28,4 +30,7 @@
 генерации короткого url.
 
 ## Методы API
-Спецификация API представлена в формате **Swagger**: http://localhost:8080/swagger-ui-custom.html
+Спецификация API представлена в формате **Swagger**: http://localhost:8080/swagger-ui-custom.html (доступна после
+запуска приложения).
+
+API для UserController протестированы с помощью интеграционных тестов.
