@@ -40,16 +40,15 @@ public class AuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String hash = request.getHeader(HttpHeaders.AUTHORIZATION);
         Optional<User> user = Optional.empty();
-        if (hash != null) {
+        if (hash != null && hash.startsWith("Basic ")) {
             user = userService.getByLogin(AuthUtil.getLogin(hash.split(" ")[1]));
+            if (user.isPresent()) {
+                request.setAttribute("user", user.get());
+                filterChain.doFilter(request, response);
+            }
         }
-        if (user.isPresent()) {
-            request.setAttribute("user", user.get());
-            filterChain.doFilter(request, response);
-        } else {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            response.getWriter().write(objectMapper.writeValueAsString(dtoMapper.getExceptionDto(401, "Not Authorized")));
-        }
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.getWriter().write(objectMapper.writeValueAsString(dtoMapper.getExceptionDto(401, "Not Authorized")));
     }
 
     @Override
