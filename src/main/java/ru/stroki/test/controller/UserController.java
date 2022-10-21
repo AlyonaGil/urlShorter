@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.stroki.test.dto.RegUserDto;
 import ru.stroki.test.dto.UserDto;
 import ru.stroki.test.entity.User;
 import ru.stroki.test.services.UserService;
@@ -36,12 +37,12 @@ public class UserController {
 
     @PostMapping("/user")
     @Operation(summary = "Регистрация нового пользователя")
-    public ResponseEntity<?> createUser(@RequestBody @Parameter(description = "\"login\" (логин), \"password\" (пароль) ") Map<String, String> params){
-        UserDto userDto = userService.createUser(params.get("login"), params.get("password"));
+    public ResponseEntity<?> createUser(@RequestBody RegUserDto regUserDto){
+        UserDto userDto = userService.createUser(regUserDto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{login}")
-                .buildAndExpand(params.get("login"))
+                .buildAndExpand(regUserDto.getLogin())
                 .toUri();
         return ResponseEntity.created(location)
                 .body(userDto);

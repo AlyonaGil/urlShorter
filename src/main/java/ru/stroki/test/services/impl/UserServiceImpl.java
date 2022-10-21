@@ -2,6 +2,7 @@ package ru.stroki.test.services.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.stroki.test.dto.RegUserDto;
 import ru.stroki.test.dto.UserDto;
 import ru.stroki.test.entity.User;
 import ru.stroki.test.repository.UserRepository;
@@ -21,7 +22,9 @@ public class UserServiceImpl implements UserService {
     private final DtoMapper dtoMapper;
 
     @Override
-    public UserDto createUser(String login, String password){
+    public UserDto createUser(RegUserDto regUserDto){
+        String login = regUserDto.getLogin();
+        String password = regUserDto.getPassword();
         if (repository.getByLogin(login).isPresent()){
             throw new ValidationException("Пользователь с логином " + login + " уже существует");
         }
