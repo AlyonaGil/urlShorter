@@ -3,6 +3,7 @@ package ru.stroki.test.services.impl;
 import lombok.AllArgsConstructor;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.stereotype.Service;
+import ru.stroki.test.dto.AddUrlDto;
 import ru.stroki.test.dto.UrlDto;
 import ru.stroki.test.dto.UrlInfoDto;
 import ru.stroki.test.entity.Url;
@@ -26,7 +27,8 @@ public class UrlServiceImpl implements UrlService {
     private final DtoMapper dtoMapper;
 
     @Override
-    public UrlDto addUrl(String longUrl, User user) {
+    public UrlDto addUrl(AddUrlDto addUrlDto, User user) {
+        String longUrl = addUrlDto.getLongUrl();
         if (longUrl.length() > 1000){
             throw new ValidationException("Длина url не должна превышать 1000 символов");
         }

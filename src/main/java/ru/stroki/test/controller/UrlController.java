@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.stroki.test.dto.AddUrlDto;
 import ru.stroki.test.dto.UrlDto;
 import ru.stroki.test.dto.UrlInfoDto;
 import ru.stroki.test.entity.User;
@@ -26,8 +27,8 @@ public class UrlController {
 
     @PostMapping("/url")
     @Operation(summary = "Создание новой короткой ссылки")
-    public ResponseEntity<UrlDto> addUrl(@RequestAttribute("user") User user, @RequestBody @Parameter(description = "\"longUrl\" (url исходной ссылки)") Map<String, String> params){
-        return ResponseEntity.ok(urlService.addUrl(params.get("longUrl"), user));
+    public ResponseEntity<UrlDto> addUrl(@RequestAttribute("user") User user, @RequestBody AddUrlDto addUrlDto){
+        return ResponseEntity.ok(urlService.addUrl(addUrlDto, user));
     }
 
     @GetMapping("/urls")

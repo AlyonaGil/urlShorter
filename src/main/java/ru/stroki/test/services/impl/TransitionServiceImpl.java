@@ -2,6 +2,7 @@ package ru.stroki.test.services.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.stroki.test.dto.DateDto;
 import ru.stroki.test.dto.StatisticsDto;
 import ru.stroki.test.entity.Transition;
 import ru.stroki.test.entity.Url;
@@ -28,12 +29,12 @@ public class TransitionServiceImpl implements TransitionService {
     private final DtoMapper dtoMapper;
 
     @Override
-    public List<StatisticsDto> getCountViewsUrls(User user, String startDate, String endDate) {
+    public List<StatisticsDto> getCountViewsUrls(User user, DateDto dateDto) {
         LocalDateTime start;
         LocalDateTime end;
         try {
-            start = LocalDateTime.parse(startDate);
-            end = LocalDateTime.parse(endDate);
+            start = LocalDateTime.parse(dateDto.getStartDate());
+            end = LocalDateTime.parse(dateDto.getEndDate());
 
         }catch (DateTimeParseException e){
             throw new ValidationException("Неправильный формат даты (yyyy-MM-dd'T'HH:mm:ss)");
@@ -65,6 +66,6 @@ public class TransitionServiceImpl implements TransitionService {
                     transitionRepository.save(transition);
                     return url.getLongUrl();
                 })
-                .orElse(null);
+                .orElseThrow(() -> new ValidationException("Данный url не найден"));
     }
 }

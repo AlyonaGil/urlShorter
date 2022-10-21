@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.stroki.test.dto.DateDto;
 import ru.stroki.test.dto.StatisticsDto;
 import ru.stroki.test.entity.User;
 import ru.stroki.test.services.impl.TransitionServiceImpl;
@@ -26,8 +27,8 @@ public class StatisticsController {
 
     @GetMapping("/countOfViews")
     @Operation(summary = "Получение информации о количестве переходов для ссылок текущего пользователя в заданном временном диапазоне")
-    public ResponseEntity<List<StatisticsDto>> getCountViewsUrls(@RequestAttribute("user") User user, @RequestBody @Parameter(description = "\"startDate\" (с какого времени) \"endDate\" (по какое время)")Map<String, String> params){
-        return ResponseEntity.ok(transitionService.getCountViewsUrls(user, params.get("startDate"), params.get("endDate")));
+    public ResponseEntity<List<StatisticsDto>> getCountViewsUrls(@RequestAttribute("user") User user, @RequestBody DateDto dateDto){
+        return ResponseEntity.ok(transitionService.getCountViewsUrls(user, dateDto));
     }
 
     @GetMapping("/top")
