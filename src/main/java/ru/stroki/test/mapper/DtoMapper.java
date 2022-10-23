@@ -33,12 +33,12 @@ public final class DtoMapper {
     }
 
     public UrlDto getUrlDto(Url url) {
-        //todo домен взять из application.properties
         return UrlDto.builder()
                 .id(url.getId())
                 .longUrl(url.getLongUrl())
                 .shortUrl(appDomain + "urlShorter/redirect/" + url.getShortUrl())
                 .createDate(String.valueOf(url.getCreateDate()))
+                .deleteDate(String.valueOf(url.getDeleteDate()))
                 .build();
     }
 

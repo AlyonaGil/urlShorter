@@ -1,6 +1,7 @@
 package ru.stroki.test.services.impl;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.stroki.test.dto.RegUserDto;
 import ru.stroki.test.dto.UserDto;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
@@ -38,23 +40,13 @@ public class UserServiceImpl implements UserService {
                 .login(login)
                 .hash(AuthUtil.getHash(login, password))
                 .build();
-
         User userSaved = repository.saveAndFlush(user);
+        log.info("Пользователь " + login + " зарегистрирован");
         return dtoMapper.getUserDto(userSaved);
     }
 
     @Override
-    public UserDto getUser(){
-        String login = "";
-        //todo проверка корректности Login
-        //todo если пусто, то вернуть ошибку
-        return repository.getByLogin(login)
-                .map(dtoMapper::getUserDto)
-                .orElse(null);
-    }
-
     public Optional<User> getByLogin(String login){
-        //todo проверка корректности Login
         return repository.getByLogin(login);
     }
 }

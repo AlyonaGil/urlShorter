@@ -3,16 +3,11 @@ package ru.stroki.test.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ru.stroki.test.dto.ExceptionDto;
 import ru.stroki.test.entity.User;
 import ru.stroki.test.mapper.DtoMapper;
 import ru.stroki.test.services.impl.UserServiceImpl;
@@ -35,20 +30,29 @@ public class AuthFilter extends OncePerRequestFilter {
 
     private ObjectMapper objectMapper;
 
+    private void unauthorized(HttpServletResponse response) throws IOException{
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.getWriter().write(objectMapper.writeValueAsString(dtoMapper.getExceptionDto(401, "Not Authorized")));
+    }
+
     @Override
     @SneakyThrows
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String hash = request.getHeader(HttpHeaders.AUTHORIZATION);
-        Optional<User> user = Optional.empty();
+        Optional<User> user;
         if (hash != null && hash.startsWith("Basic ")) {
             user = userService.getByLogin(AuthUtil.getLogin(hash.split(" ")[1]));
             if (user.isPresent()) {
                 request.setAttribute("user", user.get());
                 filterChain.doFilter(request, response);
             }
+            else{
+                unauthorized(response);
+            }
         }
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.getWriter().write(objectMapper.writeValueAsString(dtoMapper.getExceptionDto(401, "Not Authorized")));
+        else {
+            unauthorized(response);
+        }
     }
 
     @Override

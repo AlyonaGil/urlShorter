@@ -35,12 +35,12 @@ public class TransitionServiceImpl implements TransitionService {
         try {
             start = LocalDateTime.parse(dateDto.getStartDate());
             end = LocalDateTime.parse(dateDto.getEndDate());
-
-        }catch (DateTimeParseException e){
+        } catch (DateTimeParseException e) {
             throw new ValidationException("Неправильный формат даты (yyyy-MM-dd'T'HH:mm:ss)");
         }
 
-        List<Url> urls = urlRepository.getUrlsByDeleteDateIsNullAndUser(user);
+        //List<Url> urls = urlRepository.getUrlsByUser(user);
+        List<Url> urls = urlRepository.getUrlsByUserAndCreateDateAfter(user, start);
         return urls.stream()
                 .map(url -> {
                     int count = transitionRepository.getTransitionByUrlAndCreateDateBetween(url, start, end).size();

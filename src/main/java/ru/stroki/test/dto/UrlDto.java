@@ -22,4 +22,6 @@ public class UrlDto {
     private String shortUrl;
     @Schema(description = "Дата создания")
     private String createDate;
+    @Schema(description = "Дата удаления")
+    private String deleteDate;
 }
