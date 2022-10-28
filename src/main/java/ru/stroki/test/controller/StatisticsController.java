@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.stroki.test.dto.DateDto;
 import ru.stroki.test.dto.StatisticsDto;
 import ru.stroki.test.entity.User;
+import ru.stroki.test.services.TransitionService;
 import ru.stroki.test.services.impl.TransitionServiceImpl;
 
 import java.time.LocalDateTime;

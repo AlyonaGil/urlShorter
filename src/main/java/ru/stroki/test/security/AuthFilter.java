@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.stroki.test.entity.User;
 import ru.stroki.test.mapper.DtoMapper;
-import ru.stroki.test.services.impl.UserServiceImpl;
+import ru.stroki.test.services.UserService;
 import ru.stroki.test.utils.AuthUtil;
 
 import javax.servlet.FilterChain;
@@ -24,7 +24,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Order(1)
 public class AuthFilter extends OncePerRequestFilter {
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     private final DtoMapper dtoMapper;
 
