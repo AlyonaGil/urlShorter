@@ -23,7 +23,7 @@ import java.util.Map;
         description = "Методы для работы с ссылками"
 )
 public class UrlController {
-    private final UrlServiceImpl urlService;
+    private final UrlService urlService;
 
     @PostMapping("/url")
     @Operation(summary = "Создание новой короткой ссылки")

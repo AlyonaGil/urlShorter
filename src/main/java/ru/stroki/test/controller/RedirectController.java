@@ -23,7 +23,7 @@ import java.net.URI;
         description = "Методы для перехода по ссылкам"
 )
 public class RedirectController {
-    private final TransitionServiceImpl transitionService;
+    private final TransitionService transitionService;
 
     @GetMapping("/urlShorter/redirect/{shortUrl}")
     @Operation(summary = "Редирект на полный url по короткой ссылке")

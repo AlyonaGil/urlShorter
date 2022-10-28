@@ -23,7 +23,7 @@ import java.util.Map;
         description = "Методы для ведения статистики"
 )
 public class StatisticsController {
-    private final TransitionServiceImpl transitionService;
+    private final TransitionService transitionService;
 
     @GetMapping("/countOfViews")
     @Operation(summary = "Получение информации о количестве переходов для ссылок текущего пользователя в заданном временном диапазоне")
