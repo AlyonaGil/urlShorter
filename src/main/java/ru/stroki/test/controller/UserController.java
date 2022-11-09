@@ -1,7 +1,6 @@
 package ru.stroki.test.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,6 @@ import ru.stroki.test.services.UserService;
 import ru.stroki.test.mapper.DtoMapper;
 
 import java.net.URI;
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor

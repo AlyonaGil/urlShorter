@@ -1,7 +1,6 @@
 package ru.stroki.test.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,11 +9,8 @@ import ru.stroki.test.dto.DateDto;
 import ru.stroki.test.dto.StatisticsDto;
 import ru.stroki.test.entity.User;
 import ru.stroki.test.services.TransitionService;
-import ru.stroki.test.services.impl.TransitionServiceImpl;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -26,7 +22,7 @@ import java.util.Map;
 public class StatisticsController {
     private final TransitionService transitionService;
 
-    @GetMapping("/countOfViews")
+    @PostMapping("/countOfViews")
     @Operation(summary = "Получение информации о количестве переходов для ссылок текущего пользователя в заданном временном диапазоне")
     public ResponseEntity<List<StatisticsDto>> getCountViewsUrls(@RequestAttribute("user") User user, @RequestBody DateDto dateDto){
         return ResponseEntity.ok(transitionService.getCountViewsUrls(user, dateDto));

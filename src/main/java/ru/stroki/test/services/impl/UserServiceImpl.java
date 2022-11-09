@@ -3,6 +3,7 @@ package ru.stroki.test.services.impl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.stroki.test.dto.RegUserDto;
 import ru.stroki.test.dto.UserDto;
 import ru.stroki.test.entity.User;
@@ -17,6 +18,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 @Slf4j
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;

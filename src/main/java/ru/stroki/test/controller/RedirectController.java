@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import ru.stroki.test.services.TransitionService;
-import ru.stroki.test.services.impl.TransitionServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;

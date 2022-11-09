@@ -2,6 +2,7 @@ package ru.stroki.test.services.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.stroki.test.dto.DateDto;
 import ru.stroki.test.dto.StatisticsDto;
 import ru.stroki.test.entity.Transition;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class TransitionServiceImpl implements TransitionService {
 
     private final TransitionRepository transitionRepository;

@@ -11,10 +11,8 @@ import ru.stroki.test.dto.UrlDto;
 import ru.stroki.test.dto.UrlInfoDto;
 import ru.stroki.test.entity.User;
 import ru.stroki.test.services.UrlService;
-import ru.stroki.test.services.impl.UrlServiceImpl;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor
