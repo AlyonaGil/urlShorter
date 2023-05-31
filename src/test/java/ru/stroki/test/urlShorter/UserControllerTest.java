@@ -13,9 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import ru.stroki.test.dto.RegUserDto;
 import ru.stroki.test.entity.User;
-import ru.stroki.test.mapper.DtoMapper;
 import ru.stroki.test.repository.UserRepository;
-import ru.stroki.test.services.impl.UserServiceImpl;
 import ru.stroki.test.utils.AuthUtil;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -85,17 +83,6 @@ public class UserControllerTest {
                 .andExpect(status().isIAmATeapot())
                 .andExpect(jsonPath("$.message").value("createUser.regUserDto.password: must not be blank"));
     }
-
-//    @Test
-//    public void givenUser_whenAdd_thenStatus418Empty() throws Exception {
-//        mockMvc.perform(
-//                        post("/urlShorter/user")
-//                                .content(objectMapper.writeValueAsString(RegUserDto.builder().build()))
-//                                .contentType(MediaType.APPLICATION_JSON)
-//                )
-//                .andExpect(status().isIAmATeapot())
-//                .andExpect(jsonPath("$.message").value("createUser.regUserDto.password: must not be null, createUser.regUserDto.login: must not be blank, createUser.regUserDto.login: must not be null, createUser.regUserDto.password: must not be blank"));
-//    }
 
     @Test
     public void givenUser_whenAdd_thenStatus418LoginLengthShort() throws Exception {
